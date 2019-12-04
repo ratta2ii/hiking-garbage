@@ -26,6 +26,17 @@
 
 
 
+// findCampgrounds(trails[i].latitude, trails[i].longitude)
+// .then((response) => {
+//   const body = JSON.parse(response);
+//   let campgrounds = body.campgrounds;
+// },
+// function(error) {
+//   console.error(`I am the error message: ${error.message}`);
+// });
+
+
+
 
 
 

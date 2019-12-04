@@ -4,18 +4,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import { findTrails } from './apis/trails';
 import { findWeather } from './apis/weather';
+//import { getLocation } from './apis/geolocation';
 //import { findCampgrounds } from './apis/camping';
-//import { findDistance } from './apis/distance';
 
+
+
+ 
 
 $(document).ready(function() {
 
   $("#find-trails").click(function () {
-
+   
     let maxHikeDistance = $("input#trail-distance").val();
+    
 
     findTrails()
       .then((response) => {
+
+        let dayToHikeDate = $("input#hiking-date").empty().val(); // Not changing Date ??
+        console.log(dayToHikeDate);    // Remove console.log
+
         $("#display-results").empty();
         const body = JSON.parse(response);
         const trails = body.trails;
@@ -27,14 +35,15 @@ $(document).ready(function() {
 
 /* Dark Sky Weather API. Trail coordinates are used as arguments to find weather for that area. */  
 
-            findWeather(trailCoordinates)
+            findWeather(trailCoordinates, dayToHikeDate)
               .then((response) => {
 
                 let weatherBody = JSON.parse(response);
                 let weatherSummary = weatherBody.daily.data[0].summary; 
                 let temperature = weatherBody.daily.data[0].temperatureHigh; 
+              
 
-                $("#display-results").append(`<ul><li>${trails[i].name}</li><li>${trails[i].location}</li><li>${trails[i].length} mile hike</li><li>${trails[i].latitude}</li><li>${trails[i].longitude}</li><li>${weatherSummary}</li><li>${temperature} degree high</li></ul>`);
+                $("#display-results").append(`<ul><li>${trails[i].name}</li><li>${trails[i].location}</li><li>${trails[i].length} mile hike</li><li>${trails[i].latitude}</li><li>${trails[i].longitude}</li><li>${weatherSummary}</li><li>${temperature} degree high</li><a href="https://www.google.com/maps/dir/47.6062,-122.3321/${trailCoordinates}">GET DIRECTIONS</a></ul>`);
               },
               function(error) {
                 console.error(`I am the error message: ${error.message}`);
@@ -58,34 +67,19 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
-// findCampgrounds(trails[i].latitude, trails[i].longitude)
-// .then((response) => {
-//   const body = JSON.parse(response);
-//   let campgrounds = body.campgrounds;
-// },
-// function(error) {
-//   console.error(`I am the error message: ${error.message}`);
-// });
-
-
-
-
+// // https://www.google.com/maps/dir/${getLocation()}/${...Camping Coordinates...}
 
 // let trailCoordinates = `${trails[i].latitude},${trails[i].longitude}`;
 
-// findDistance(trailCoordinates);
-// .then((response) => {
 
-//   let distanceBody = JSON.parse(response);
-//   let distance = distanceBody.rows[0].elements[0].distance.text; 
-//   let duration = distanceBody.rows[0].elements[0].duration.text;  
-// },
-// function(error) {
-//   console.error(`I am the error message: ${error.message}`);
-// });
+
+
+
+
+
+
+
+
+
+
 
