@@ -1,6 +1,3 @@
-// .... Important to import the findDistance function in main.js when uncommented ....
-
-
 
 // export function getLocation() {
 //     if (navigator.geolocation) {
